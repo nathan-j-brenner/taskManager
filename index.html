@@ -16,7 +16,11 @@
 					<input type="submit" value="add">
 				</form>
 				<ul>
-					<li ng-repeat="task in tasks">{{task}}</li>
+					<li ng-repeat="task in tasks">
+						{{task}}
+						<input type="button" ng-click="editTask(task)" value="edit">
+						<input type="button" ng-click="deleteTask(task)" value="delete">
+					</li>
 				</ul>
 			</div>
 		</div>
