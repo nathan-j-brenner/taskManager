@@ -1,5 +1,6 @@
-app.controller('ctrl', ['$scope', function($scope){
-	$scope.name = 'nate';
+app.controller('personCtrl', ['$scope', function($scope){
+	$scope.name = "Nate Brenner"
+
 	$scope.tasks = [];
 	$scope.addTask = function(){
 		if($scope.tasks.indexOf($scope.taskToAdd)!==-1){
