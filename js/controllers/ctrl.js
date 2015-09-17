@@ -2,8 +2,13 @@ app.controller('ctrl', ['$scope', function($scope){
 	$scope.name = 'nate';
 	$scope.tasks = [];
 	$scope.addTask = function(){
-		$scope.tasks.push($scope.taskToAdd);
-		$scope.taskToAdd = '';
+		if($scope.tasks.indexOf($scope.taskToAdd)!==-1){
+			alert("That task already is on the list");
+			$scope.taskToAdd = '';
+		} else{
+			$scope.tasks.push($scope.taskToAdd);
+			$scope.taskToAdd = '';
+		}
 	};
 	$scope.deleteTask = function(task){
 		var taskIndex = $scope.tasks.indexOf(task);
