@@ -3,7 +3,7 @@ peopleApp.controller('peopleCtrl', ['$scope', function($scope){
 	$scope.people = [
 		{
 			"name": "Nate",
-			"tasks": ['a', 'b']
+			"tasks": []
 		}
 	];
 
@@ -39,11 +39,12 @@ peopleApp.controller('peopleCtrl', ['$scope', function($scope){
 			alert("That person doesn't have a list yet");
 		}
 	};
-	$scope.addTask = function(name){
+	$scope.addTask = function(name, task){
 		for(var i = 0; i<$scope.people.length; i++){
 			if($scope.people[i].name===name){
-				return alert($scope.people[i].name);
+				return $scope.people[i].tasks.push(task);
 			}
 		}
 	};
+
 }]);

@@ -23,11 +23,7 @@
 							<input type="button" ng-click="deleteTask(task)" value="delete">
 						</li>
 					</ul>
-<!-- 					<form ng-submit="addTask(taskToAdd)">
-						<input type="text" ng-model="taskToAdd">
-						<input type="submit" value="add">
-					</form> -->
-					<form ng-submit="addTask(person.name)">
+					<form ng-submit="addTask(person.name, taskToAdd)">
 						<input type="text" ng-model="taskToAdd">
 						<input type="submit" value="add">
 					</form>
