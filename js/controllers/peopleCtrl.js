@@ -6,6 +6,7 @@ peopleApp.controller('peopleCtrl', ['$scope', function($scope){
 			"tasks": ['a', 'b']
 		}
 	];
+
 	$scope.createPerson = function(person){
 		$scope.name = false;
 		if(!$scope.personToAdd){
@@ -37,7 +38,12 @@ peopleApp.controller('peopleCtrl', ['$scope', function($scope){
 		} else{
 			alert("That person doesn't have a list yet");
 		}
-	}
+	};
+	$scope.addTask = function(name){
+		for(var i = 0; i<$scope.people.length; i++){
+			if($scope.people[i].name===name){
+				return alert($scope.people[i].name);
+			}
+		}
+	};
 }]);
-// $scope.people.push({"name": $scope.personToAdd, "tasks": []});
-// $scope.personToAdd = '';
