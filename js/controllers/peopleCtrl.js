@@ -6,7 +6,6 @@ peopleApp.controller('peopleCtrl', ['$scope', function($scope){
 			"tasks": []
 		}
 	];
-
 	$scope.createPerson = function(person){
 		$scope.name = false;
 		if(!$scope.personToAdd){
@@ -44,9 +43,10 @@ peopleApp.controller('peopleCtrl', ['$scope', function($scope){
 			if($scope.people[i].name===name){
 				if($scope.people[i].tasks.indexOf(task)!=-1){
 					alert("That task is already on your list");
-					task = '';
+					$scope.people[i].taskToAdd = '';
 				} else{
-					return $scope.people[i].tasks.push(task);
+					$scope.people[i].tasks.push(task);
+					$scope.people[i].taskToAdd = '';
 				}
 			}
 		}
@@ -57,6 +57,15 @@ peopleApp.controller('peopleCtrl', ['$scope', function($scope){
 				return $scope.people[i].tasks.splice(task, 1);
 			}
 		}
-	}
+	};
+	$scope.editTask = function(name, task){
+		for(var i = 0; i<$scope.people.length; i++){
+			if($scope.people[i].name===name){
+				var taskIndex = $scope.people[i].tasks.indexOf(task);
+				$scope.people[i].taskToAdd = task;
+				$scope.people[i].tasks.splice(taskIndex, 1);
+			}
+		}
+	};
 
 }]);
