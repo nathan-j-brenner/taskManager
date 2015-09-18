@@ -9,12 +9,28 @@
 	<div class="container-fuid">
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4">
+				<h1>TaskManager</h1>
+				<p>This is a tool to help you identify tasks that you need to see are completed.</p>
+				<p>Work flow:</p>
+					<ol>
+						<li>Create the list of tasks you need to complete</li>
+						<li>Create a separate list of who you have available that you asign tasks</li>
+						<li>Delegate the tasks from the main list over to indivials to complete</li>
+					</ol>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-5 col-md-offset-4">
 				<form ng-submit="createPerson()">
 					<input type="text" ng-model="personToAdd"/>
 					<input  type="submit" value="create person"/>
 					<input type="button" value="delete person" ng-click="deletePerson(person)" />
 				</form>
-				<div ng-repeat="person in people">
+			</div>
+		</div>
+		<div class="row">
+			<div class='col-md-10 col-md-offset-1'>
+				<div class="col-md-3" ng-repeat="person in people">
 					<h1>{{person.name}}</h1>
 					<ul>
 						<li ng-repeat="task in person.tasks">

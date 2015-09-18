@@ -1,4 +1,5 @@
-app.controller('personCtrl', ['$scope', function($scope){
+var personApp = angular.module('personApp', []);
+personApp.controller('personCtrl', ['$scope', function($scope){
 	$scope.name = "Nate Brenner"
 
 	$scope.tasks = [];
