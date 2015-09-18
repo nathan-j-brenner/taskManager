@@ -42,9 +42,21 @@ peopleApp.controller('peopleCtrl', ['$scope', function($scope){
 	$scope.addTask = function(name, task){
 		for(var i = 0; i<$scope.people.length; i++){
 			if($scope.people[i].name===name){
-				return $scope.people[i].tasks.push(task);
+				if($scope.people[i].tasks.indexOf(task)!=-1){
+					alert("That task is already on your list");
+					task = '';
+				} else{
+					return $scope.people[i].tasks.push(task);
+				}
 			}
 		}
 	};
+	$scope.deleteTask = function(name, task){
+		for(var i = 0; i<$scope.people.length; i++){
+			if($scope.people[i].name===name){
+				return $scope.people[i].tasks.splice(task, 1);
+			}
+		}
+	}
 
 }]);
