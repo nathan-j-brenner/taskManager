@@ -1,24 +1,5 @@
 var peopleApp = angular.module('peopleApp', []);
-peopleApp.controller('peopleCtrl', ['$scope', function($scope){
-	// $scope.tasks = [];
-	// $scope.addTask = function(){
-	// 	if($scope.tasks.indexOf($scope.taskToAdd)!==-1){
-	// 		alert("That task already is on the list");
-	// 		$scope.taskToAdd = '';
-	// 	} else{
-	// 		$scope.tasks.push($scope.taskToAdd);
-	// 		$scope.taskToAdd = '';
-	// 	}
-	// };
-	// $scope.deleteTask = function(task){
-	// 	var taskIndex = $scope.tasks.indexOf(task);
-	// 	$scope.tasks.splice(taskIndex, 1);
-	// };
-	// $scope.editTask = function(task){
-	// 	var taskIndex = $scope.tasks.indexOf(task);
-	// 	$scope.taskToAdd = $scope.tasks[taskIndex];
-	// 	$scope.tasks.splice(taskIndex, 1);
-	// };
+app.controller('peopleCtrl', ['$scope', function($scope){
 	$scope.people = [
 		{
 			"name": "Nate",
@@ -63,7 +44,10 @@ peopleApp.controller('peopleCtrl', ['$scope', function($scope){
 				if($scope.people[i].tasks.indexOf(task)!=-1){
 					alert("That task is already on your list");
 					$scope.people[i].taskToAdd = '';
-				} else{
+				} else if($scope.people[i].taskToAdd===undefined){
+					alert('Looks like you forgot to type in a task');
+				} else {
+					// console.log($scope.people[i].taskToAdd);
 					$scope.people[i].tasks.push(task);
 					$scope.people[i].taskToAdd = '';
 				}
@@ -84,6 +68,16 @@ peopleApp.controller('peopleCtrl', ['$scope', function($scope){
 				$scope.people[i].taskToAdd = task;
 				$scope.people[i].tasks.splice(taskIndex, 1);
 			}
+		}
+	};
+	$scope.manageTasks = [];
+	$scope.createNewTask = function(){
+		if($scope.manageTasks.indexOf($scope.taskToManage)!==-1){
+			alert("That task is already on the list");
+			$scope.taskToManage = '';
+		} else{
+			$scope.manageTasks.push($scope.taskToManage);
+			$scope.taskToManage = '';
 		}
 	};
 
