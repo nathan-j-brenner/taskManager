@@ -1,9 +1,14 @@
-var peopleApp = angular.module('peopleApp', []);
 'use strict';
+
 app.controller('peopleCtrl', ['$scope', function($scope){
-	//manager functions
+
+
+	//manager methods
+
 	//people is a list of people that can be assigned tasks
-	$scope.people = []; //people starts as an empty array which will contain objects with a name key that will have a single value as a string, and tasks array
+	$scope.people = []; 
+	//people starts as an empty array which will contain objects with a name key that will have a single value as a string, and tasks array
+	
 	//create a new person
 	$scope.createPerson = function(person){
 		$scope.nameIsNotInPeople = true;//this assumes the manager is adding new people to the list
@@ -25,6 +30,8 @@ app.controller('peopleCtrl', ['$scope', function($scope){
 			$scope.personToAdd = ''; //reset this data so the manager can add more people
 		}
 	};
+
+	//remove a person from the list of people
 	$scope.deletePerson = function(person){ //person is the object with a name property and a tasks property
 		for(var i = 0; i<$scope.people.length; i++){ //cycle through all the objects in people
 			if($scope.people[i].name===person.name){ //once the index position of the object in question has been located
@@ -32,6 +39,34 @@ app.controller('peopleCtrl', ['$scope', function($scope){
 			}
 		}
 	};
+
+	$scope.manageTasks = []; //this array will contain the tasks that the manager adds
+
+	$scope.createNewTask = function(){
+		$scope.taskToManageLowerCase = $scope.taskToManage.toLowerCase(); //filter the new task to be all in lower case
+		if($scope.manageTasks.indexOf($scope.taskToManageLowerCase)>-1){ //if the new task is already in the list
+			alert("That task is already on the list");
+			$scope.taskToManage = ''; //reset taskToManage
+		} else{
+			$scope.manageTasks.push($scope.taskToManageLowerCase); //otherwise add it to the list
+			$scope.taskToManage = '';
+		}
+	};
+
+	$scope.editManagedTask = function(task){
+		//console.log($scope.manageTasks); prints the manageTasks array
+		//console.log(task);
+		$scope.taskToManage = task;
+		var manageTaskIndex = $scope.manageTasks.indexOf(task);
+		$scope.manageTasks[manageTaskIndex] = '';
+		// console.log($scope.manageTasks.indexOf(task));
+		// var editingTaskIndex = $scope.manageTasks.indexOf(task);
+		// $scope.manageTaskIndex = $scope.manageTasks.indexOf(task);
+		// if(task===$scope.manageTasks[editingTaskIndex]){console.log('test')}
+	};
+
+
+
 	$scope.addTask = function(name, task){
 		for(var i = 0; i<$scope.people.length; i++){
 			if($scope.people[i].name===name){
@@ -70,27 +105,27 @@ app.controller('peopleCtrl', ['$scope', function($scope){
 			}
 		}
 	};
-	$scope.manageTasks = [];
-	$scope.createNewTask = function(){
-		if($scope.manageTasks.indexOf($scope.taskToManage)!==-1){
-			alert("That task is already on the list");
-			$scope.taskToManage = '';
-		} else{
-			$scope.manageTasks.push($scope.taskToManage);
-			$scope.taskToManage = '';
-		}
-	};
-	$scope.editManagedTask = function(task){
-		//console.log($scope.manageTasks); prints the manageTasks array
-		//console.log(task);
-		$scope.taskToManage = task;
-		var manageTaskIndex = $scope.manageTasks.indexOf(task);
-		$scope.manageTasks[manageTaskIndex] = '';
-		// console.log($scope.manageTasks.indexOf(task));
-		// var editingTaskIndex = $scope.manageTasks.indexOf(task);
-		// $scope.manageTaskIndex = $scope.manageTasks.indexOf(task);
-		// if(task===$scope.manageTasks[editingTaskIndex]){console.log('test')}
-	};
+	// $scope.manageTasks = [];
+	// $scope.createNewTask = function(){
+	// 	if($scope.manageTasks.indexOf($scope.taskToManage)!==-1){
+	// 		alert("That task is already on the list");
+	// 		$scope.taskToManage = '';
+	// 	} else{
+	// 		$scope.manageTasks.push($scope.taskToManage);
+	// 		$scope.taskToManage = '';
+	// 	}
+	// };
+	// $scope.editManagedTask = function(task){
+	// 	//console.log($scope.manageTasks); prints the manageTasks array
+	// 	//console.log(task);
+	// 	$scope.taskToManage = task;
+	// 	var manageTaskIndex = $scope.manageTasks.indexOf(task);
+	// 	$scope.manageTasks[manageTaskIndex] = '';
+	// 	// console.log($scope.manageTasks.indexOf(task));
+	// 	// var editingTaskIndex = $scope.manageTasks.indexOf(task);
+	// 	// $scope.manageTaskIndex = $scope.manageTasks.indexOf(task);
+	// 	// if(task===$scope.manageTasks[editingTaskIndex]){console.log('test')}
+	// };
 	$scope.deleteTask = function(task){
 		var taskIndex = $scope.tasks.indexOf(task);
 		$scope.tasks.splice(taskIndex, 1);
