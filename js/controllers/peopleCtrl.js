@@ -11,6 +11,7 @@ app.controller('peopleCtrl', ['$scope', function($scope){
 	
 	//create a new person
 	$scope.createPerson = function(person){
+		$scope.timeStarted = new Date();
 		$scope.nameIsNotInPeople = true;//this assumes the manager is adding new people to the list
 		if(!$scope.personToAdd){ //if the manager hasn't inputted a name into the create person form
 			alert("Please tell us your name");
@@ -25,7 +26,7 @@ app.controller('peopleCtrl', ['$scope', function($scope){
 				}
 			} 
 			if(!$scope.nameIsInPeople){ //since that new person is not on your list, lets add it
-				$scope.people.push({"name": $scope.formattedName, "tasks": []});
+				$scope.people.push({"name": $scope.formattedName, "tasks": [], "timeStarted": $scope.timeStarted});
 			}
 			$scope.personToAdd = ''; //reset this data so the manager can add more people
 		}
@@ -51,6 +52,7 @@ app.controller('peopleCtrl', ['$scope', function($scope){
 				alert("That task is already on the list");
 				$scope.taskToManage = ''; //reset taskToManage
 			} else{
+				console.log(typeof $scope.taskToManage);
 				$scope.manageTasks.push($scope.taskToManageLowerCase); //otherwise add it to the list
 				$scope.taskToManage = '';
 			}
@@ -66,8 +68,6 @@ app.controller('peopleCtrl', ['$scope', function($scope){
 		$scope.manageTasks.splice($scope.manageTasks.indexOf(task), 1); //remove the task from the manageTasks array
 	};
 
-
-
 	$scope.addTask = function(name, task){
 		for(var i = 0; i<$scope.people.length; i++){
 			if($scope.people[i].name===name){
@@ -75,13 +75,11 @@ app.controller('peopleCtrl', ['$scope', function($scope){
 					alert("That task is already on your list");
 					$scope.people[i].taskToAdd = '';
 				} else if($scope.people[i].taskToAdd===undefined){
-					alert('Looks like you forgot to type in a task');
+					alert('Looks like the manager has not added that task task');
 				} else {
-					console.log($scope.people[i].taskToAdd);
-					// $scope.people[i].tasks.push(task);
-					if($scope.manageTasks.indexOf($scope.people[i].taskToAdd)!==-1){
-						$scope.manageTasks.splice($scope.people[i].taskToAdd, 1);
-						$scope.people[i].tasks.push(task);
+					if($scope.manageTasks.indexOf($scope.people[i].taskToAdd)!=-1){ //if the task that the employee typed in is a task that the manager needs done:
+						$scope.manageTasks.splice($scope.manageTasks.indexOf($scope.people[i].taskToAdd), 1);//remove that task from the manager's list
+						$scope.people[i].tasks.push(task); //and add that task to the employee's list
 					} else{
 						alert("You haven't created that task yet");
 					}
@@ -90,11 +88,20 @@ app.controller('peopleCtrl', ['$scope', function($scope){
 			}
 		}
 	};
+	$scope.completeTasksSection = function(){
+		if($scope.tasksCompleted.length<0){
+			$scope.tasksCompletedHeader = "Completed Tasks";
+		}
+	};
 	$scope.deleteTask = function(name, task){ //in this case, the employee would indicate that they completed the task
-		console.log($scope.tasksCompleted);
 		for(var i = 0; i<$scope.people.length; i++){
 			if($scope.people[i].name===name){
-				$scope.tasksCompleted.push(task);
+				$scope.taskCompleted = new Date();
+				$scope.tasksCompleted.push($scope.people[i].name + ": " + task);
+				if($scope.tasksCompleted.length>0){
+					$scope.completedTasksHeader = "Completed Tasks for today";
+
+				}
 				return $scope.people[i].tasks.splice(task, 1);
 			}
 		}
@@ -109,4 +116,5 @@ app.controller('peopleCtrl', ['$scope', function($scope){
 		}
 	};
 	$scope.tasksCompleted = [];
+	// $scope.day = new Day();
 }]);
