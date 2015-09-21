@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app='app'>
 <head>
-	<title></title>
+	<title>taskManager</title>
 	<script type="text/javascript" src="https://code.angularjs.org/1.4.6/angular.min.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -27,12 +27,17 @@
 					<input type="submit" value="create new task">
 				</form>
 				<ul>
-					<li ng-repeat="task in manageTasks">{{task}}</li>
+					<li ng-repeat="task in manageTasks">
+						{{task}}
+						<input type="button" ng-click="editManagedTask(task)" value="edit">
+						<input type="button" ng-click="deleteManagedTask()" value="delete">
+					</li>
+
 				</ul>
 			</div>
 			<div class="col-md-4">
 				<form ng-submit="createPerson()">
-					<input type="text" ng-model="personToAdd"/>
+					<input type="text" ng-model="personToAdd"/ placeholder="first name">
 					<input  type="submit" value="create person"/>
 					<input type="button" value="delete person" ng-click="deletePerson(person)" />
 				</form>
