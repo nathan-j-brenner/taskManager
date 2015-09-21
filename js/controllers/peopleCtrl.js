@@ -1,4 +1,5 @@
 var peopleApp = angular.module('peopleApp', []);
+'use strict';
 app.controller('peopleCtrl', ['$scope', function($scope){
 	//manager functions
 	//people is a list of people that can be assigned tasks
@@ -24,19 +25,11 @@ app.controller('peopleCtrl', ['$scope', function($scope){
 			$scope.personToAdd = ''; //reset this data so the manager can add more people
 		}
 	};
-	$scope.deletePerson = function(person){
-		// $scope.people.pop();
-		var personIndex;
-		for(var i = 0; i<$scope.people.length; i++){
-			if($scope.people[i].name===$scope.personToAdd){
-				personIndex = i;
+	$scope.deletePerson = function(person){ //person is the object with a name property and a tasks property
+		for(var i = 0; i<$scope.people.length; i++){ //cycle through all the objects in people
+			if($scope.people[i].name===person.name){ //once the index position of the object in question has been located
+				$scope.people.splice(i, 1); //remove that object from the model
 			}
-		}
-		if(personIndex){
-			$scope.people.splice(personIndex, 1);
-			$scope.personToAdd = '';
-		} else{
-			alert("That person doesn't have a list yet");
 		}
 	};
 	$scope.addTask = function(name, task){
