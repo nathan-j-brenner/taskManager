@@ -43,19 +43,27 @@ app.controller('peopleCtrl', ['$scope', function($scope){
 	$scope.manageTasks = []; //this array will contain the tasks that the manager adds
 
 	$scope.createNewTask = function(){
-		$scope.taskToManageLowerCase = $scope.taskToManage.toLowerCase(); //filter the new task to be all in lower case
-		if($scope.manageTasks.indexOf($scope.taskToManageLowerCase)>-1){ //if the new task is already in the list
-			alert("That task is already on the list");
-			$scope.taskToManage = ''; //reset taskToManage
-		} else{
-			$scope.manageTasks.push($scope.taskToManageLowerCase); //otherwise add it to the list
-			$scope.taskToManage = '';
+		if(!$scope.taskToManage){ //if taskToManage is falsy, meaning it is undefined or is an empty string
+			alert("Please type in a task");
+		}else{
+			$scope.taskToManageLowerCase = $scope.taskToManage.toLowerCase(); //filter the new task to be all in lower case
+			if($scope.manageTasks.indexOf($scope.taskToManageLowerCase)>-1){ //if the new task is already in the list
+				alert("That task is already on the list");
+				$scope.taskToManage = ''; //reset taskToManage
+			} else{
+				$scope.manageTasks.push($scope.taskToManageLowerCase); //otherwise add it to the list
+				$scope.taskToManage = '';
+			}
 		}
 	};
 
 	$scope.editManagedTask = function(task){
 		$scope.taskToManage = task;//this sets the task value back in the input field
 		$scope.manageTasks.splice($scope.manageTasks.indexOf($scope.taskToManage), 1); //remove the task from the manageTasks array
+	};
+
+	$scope.deleteManagedTask = function(task){
+		$scope.manageTasks.splice($scope.manageTasks.indexOf(task), 1); //remove the task from the manageTasks array
 	};
 
 
@@ -82,9 +90,11 @@ app.controller('peopleCtrl', ['$scope', function($scope){
 			}
 		}
 	};
-	$scope.deleteTask = function(name, task){
+	$scope.deleteTask = function(name, task){ //in this case, the employee would indicate that they completed the task
+		console.log($scope.tasksCompleted);
 		for(var i = 0; i<$scope.people.length; i++){
 			if($scope.people[i].name===name){
+				$scope.tasksCompleted.push(task);
 				return $scope.people[i].tasks.splice(task, 1);
 			}
 		}
@@ -93,39 +103,10 @@ app.controller('peopleCtrl', ['$scope', function($scope){
 		for(var i = 0; i<$scope.people.length; i++){
 			if($scope.people[i].name===name){
 				var taskIndex = $scope.people[i].tasks.indexOf(task);
-				$scope.people[i].taskToAdd = task;
+				$scope.taskToManage = task;
 				$scope.people[i].tasks.splice(taskIndex, 1);
 			}
 		}
 	};
-	// $scope.manageTasks = [];
-	// $scope.createNewTask = function(){
-	// 	if($scope.manageTasks.indexOf($scope.taskToManage)!==-1){
-	// 		alert("That task is already on the list");
-	// 		$scope.taskToManage = '';
-	// 	} else{
-	// 		$scope.manageTasks.push($scope.taskToManage);
-	// 		$scope.taskToManage = '';
-	// 	}
-	// };
-	// $scope.editManagedTask = function(task){
-	// 	//console.log($scope.manageTasks); prints the manageTasks array
-	// 	//console.log(task);
-	// 	$scope.taskToManage = task;
-	// 	var manageTaskIndex = $scope.manageTasks.indexOf(task);
-	// 	$scope.manageTasks[manageTaskIndex] = '';
-	// 	// console.log($scope.manageTasks.indexOf(task));
-	// 	// var editingTaskIndex = $scope.manageTasks.indexOf(task);
-	// 	// $scope.manageTaskIndex = $scope.manageTasks.indexOf(task);
-	// 	// if(task===$scope.manageTasks[editingTaskIndex]){console.log('test')}
-	// };
-	$scope.deleteTask = function(task){
-		var taskIndex = $scope.tasks.indexOf(task);
-		$scope.tasks.splice(taskIndex, 1);
-	};
-	$scope.editTask = function(task){
-		var taskIndex = $scope.tasks.indexOf(task);
-		$scope.taskToAdd = $scope.tasks[taskIndex];
-		$scope.tasks.splice(taskIndex, 1);
-	};
+	$scope.tasksCompleted = [];
 }]);
