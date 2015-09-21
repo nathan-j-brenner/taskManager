@@ -54,15 +54,8 @@ app.controller('peopleCtrl', ['$scope', function($scope){
 	};
 
 	$scope.editManagedTask = function(task){
-		//console.log($scope.manageTasks); prints the manageTasks array
-		//console.log(task);
-		$scope.taskToManage = task;
-		var manageTaskIndex = $scope.manageTasks.indexOf(task);
-		$scope.manageTasks[manageTaskIndex] = '';
-		// console.log($scope.manageTasks.indexOf(task));
-		// var editingTaskIndex = $scope.manageTasks.indexOf(task);
-		// $scope.manageTaskIndex = $scope.manageTasks.indexOf(task);
-		// if(task===$scope.manageTasks[editingTaskIndex]){console.log('test')}
+		$scope.taskToManage = task;//this sets the task value back in the input field
+		$scope.manageTasks.splice($scope.manageTasks.indexOf($scope.taskToManage), 1); //remove the task from the manageTasks array
 	};
 
 
